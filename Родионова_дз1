@@ -1,0 +1,203 @@
+//Ex 1
+set serveroutput on;
+create or replace type arrayofnames 
+    is table of varchar2(300);
+
+create or replace function empl(dep_id in number)
+    return arrayofnames
+is
+    arrayofnames1 arrayofnames;
+begin
+    select FIRST_NAME 
+        BULK COLLECT INTO arrayofnames1
+        FROM EMPLOYEES
+        WHERE department_id = dep_id;
+    return arrayofnames1;
+end;
+
+/
+set serveroutput on;
+
+declare
+    a arrayofnames;
+    e_does_not_exist exception;
+begin
+    a:=empl(100);
+    FOR i IN 1 .. a.LAST
+    LOOP
+        IF a.EXISTS(i)
+        THEN
+            DBMS_OUTPUT.PUT_LINE(a(i));
+        ELSE
+            RAISE e_does_not_exist;
+        END IF;
+    END LOOP;
+    EXCEPTION
+        WHEN e_does_not_exist
+            THEN DBMS_OUTPUT.PUT_LINE('Does not exist');
+end;
+/
+//Ex 2
+create or replace package PKG_OPERATIONS as
+     procedure make(
+            table_name in varchar2, 
+            columns_name in varchar2);
+
+    procedure delete_row(
+            table_name in varchar2, 
+            id  in varchar2);
+        procedure add_row(
+            table_name in varchar2, 
+            val in varchar2, 
+            cols in varchar2);
+    procedure upd_row(
+            table_name in varchar2, 
+            changes in varchar2, 
+            id in varchar2);
+    end PKG_OPERATIONS;
+    
+    
+       CREATE or REPLACE PACKAGE BODY PKG_OPERATIONS as
+             procedure make(
+                table_name in varchar2, 
+                columns_name in varchar2) is
+                  var1 varchar2(400);
+                begin
+                    var1:= 'CREATE TABLE '||table_name|| ' (' ||columns_name||')';
+                
+                    execute immediate var1;
+        end make;
+             procedure delete_row(
+                table_name in varchar2, 
+                id in varchar2) is
+                var1 varchar2(400);
+                begin
+                    var1:= 'DELETE FROM '||table_name|| ' WHERE ' ||id;
+                    execute immediate var1;
+--                    IF sql%NOTFOUND THEN
+--                        raise_application_error(-20011, 'Invalid id');
+--                    END IF;
+                end delete_row;
+                procedure add_row(
+                    table_name in varchar2, 
+                    val in varchar2, 
+                    cols in varchar2)
+                    is
+                    var1 varchar2(400);
+                    begin
+                        var1:= 'INSERT INTO '||table_name||' ('||cols||' ) VALUES ('||val||' )';
+                        execute immediate var1;
+                    end add_row;
+                 procedure upd_row(
+                    table_name in varchar2, 
+                    changes in varchar2, 
+                    id in varchar2)
+                    is
+                    var1 varchar2(500);
+                    begin
+                      var1:= 'UPDATE '||table_name||' SET '||changes||' WHERE ' ||id;                
+                        execute immediate var1;
+                    end upd_row; 
+end PKG_OPERATIONS;
+/
+begin
+    PKG_OPERATIONS.make('my_contacts', 'id number(4), name varchar2(40)');
+    pkg_operations.add_row('my_contacts','1, ''Andrey Gavrilov''','id, name');
+    pkg_operations.add_row('my_contacts','2, ''Julia Pesina''','id, name');
+    pkg_operations.upd_row('my_contacts','name=''Andrey A. Gavrilov''', 'id=1');
+    pkg_operations.delete_row('my_contacts', 'id=2');
+end;
+
+//Ex 3
+SET SERVEROUTPUT ON;
+
+DECLARE
+    x1             number := 0;
+    x2             number := 0;
+    x3             number := 0;
+    x4             number := 0;
+    x5             number := 0;
+    x6             number := 0;
+    bilets   number := 1;
+    first_sum      number := 0;
+    second_sum     number := 0;
+    temp           varchar2(255);
+BEGIN
+    FOR i IN 1..999999 LOOP
+        temp := TO_CHAR(i);
+        x1 := to_number(substr(temp, 1, 1));
+        x2 := to_number(substr(temp, 2, 1));
+        x3 := to_number(substr(temp, 3, 1));
+        first_sum := x1 + x2 + x3;
+        IF ( to_number(substr(temp, 4, 1)) > -1 ) THEN
+            x4 := to_number(substr(temp, 4, 1));
+        END IF;
+
+        IF ( to_number(substr(temp, 5, 1)) > -1 ) THEN
+            x5 := to_number(substr(temp, 5, 1));
+        END IF;
+
+        IF ( to_number(substr(temp, 6, 1)) > -1 ) THEN
+            x6 := to_number(substr(temp, 6, 1));
+        END IF;
+
+        second_sum := x4 + x5 + x6;
+        IF ( first_sum = second_sum ) THEN
+            bilets := bilets + 1;
+        END IF;
+        first_sum := 0;
+        second_sum := 0;
+        x1 := 0;
+        x2 := 0;
+        x3 := 0;
+        x4 := 0;
+        x5 := 0;
+        x6 := 0;
+    END LOOP;
+
+    dbms_output.put_line(TO_CHAR(bilets));
+END;
+
+//Ex 4
+CREATE TABLE people (
+    id         NUMBER(10)
+        CONSTRAINT usrs_id_pk PRIMARY KEY,
+    firstName       VARCHAR2(50)
+        CONSTRAINT usrs_name_nn NOT NULL,
+    secondName   VARCHAR2(50)
+);
+/
+CREATE SEQUENCE new_id_people START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
+/
+
+CREATE OR REPLACE TRIGGER id_trg BEFORE
+    INSERT ON people
+    FOR EACH ROW
+BEGIN
+    :new.id := new_id_people.nextval;
+END;
+/
+
+    INSERT INTO people (
+        firstName,
+        secondName
+    ) VALUES (
+        'Julia',
+        'Rodionova'
+    );
+/
+
+    INSERT INTO people (
+        firstName,
+        secondName
+    ) VALUES (
+        'John',
+        'Smith'
+    );
+/
+
+SELECT
+    *
+FROM
+    people;
+/
