@@ -111,74 +111,74 @@ foreign key (parent_id)
 references objects(object_id);
 
 insert into object_types
-values(1, null, 'предметы', 'родитель', null);
+values(1, null, 'ГЇГ°ГҐГ¤Г¬ГҐГІГ»', 'Г°Г®Г¤ГЁГІГҐГ«Гј', null);
 insert into object_types
-values(2, 1, 'мебель', null, null);
+values(2, 1, 'Г¬ГҐГЎГҐГ«Гј', null, null);
 insert into object_types
-values(3, 1, 'техника', null, null);
+values(3, 1, 'ГІГҐГµГ­ГЁГЄГ ', null, null);
 
 insert into objects 
-values (1, null, 1, 'офис. меб.', 'родитель', 1);
+values (1, null, 1, 'Г®ГґГЁГ±. Г¬ГҐГЎ.', 'Г°Г®Г¤ГЁГІГҐГ«Гј', 1);
 
 insert into objects 
-values (2, 1, 2, 'стол', null, 2);
+values (2, 1, 2, 'Г±ГІГ®Г«', null, 2);
 insert into objects 
-values (3, 1, 3, 'компьютер', null, 3);
+values (3, 1, 3, 'ГЄГ®Г¬ГЇГјГѕГІГҐГ°', null, 3);
 insert into objects 
-values (4, 1, 3, 'принтер', null, 4);
+values (4, 1, 3, 'ГЇГ°ГЁГ­ГІГҐГ°', null, 4);
 
 insert into attr_groups
-values(1,'внешний вид', null);
+values(1,'ГўГ­ГҐГёГ­ГЁГ© ГўГЁГ¤', null);
 insert into attr_groups
-values(2,'прочее', null);
+values(2,'ГЇГ°Г®Г·ГҐГҐ', null);
 
 
 insert into attr_types 
-values(1, 'Цвет', null);
+values(1, 'Г–ГўГҐГІ', null);
 insert into attr_types 
-values(2, 'Материал', null);
-
-insert into attr_types 
-values(3, 'Марка', null);
+values(2, 'ГЊГ ГІГҐГ°ГЁГ Г«', null);
 
 insert into attr_types 
-values(4, 'Ссылка', null);
+values(3, 'ГЊГ Г°ГЄГ ', null);
+
+insert into attr_types 
+values(4, 'Г‘Г±Г»Г«ГЄГ ', null);
 
 insert into attributes
-values(1, 1, 1, 'Цвет комп.', null, 1, null);
+values(1, 1, 1, 'Г–ГўГҐГІ ГЄГ®Г¬ГЇ.', null, 1, null);
 
 insert into attributes
-values(2, 1, 1, 'Цвет стола.', null, 1, null);
+values(2, 1, 1, 'Г–ГўГҐГІ Г±ГІГ®Г«Г .', null, 1, null);
 
 insert into attributes
-values(3, 1, 1, 'Цвет принт.', null, 1, null);
+values(3, 1, 1, 'Г–ГўГҐГІ ГЇГ°ГЁГ­ГІ.', null, 1, null);
 
 insert into attributes
-values(4, 2, 1, 'матер. стол', null, 1, null);
+values(4, 2, 1, 'Г¬Г ГІГҐГ°. Г±ГІГ®Г«', null, 1, null);
 
 insert into attributes
-values(5, 3, 2, 'марка комп.', null, 1, null);
+values(5, 3, 2, 'Г¬Г Г°ГЄГ  ГЄГ®Г¬ГЇ.', null, 1, null);
 
 insert into params
-values(2, 2, 'Коричневый', null, null);
+values(2, 2, 'ГЉГ®Г°ГЁГ·Г­ГҐГўГ»Г©', null, null);
 
 
 insert into attributes
-values(6, 4, 2, 'Комп.-принт', null, 1, null);
+values(6, 4, 2, 'ГЉГ®Г¬ГЇ.-ГЇГ°ГЁГ­ГІ', null, 1, null);
 insert into attr_binds 
 values(2, 2, null, 1, 'black');
 
 insert into attr_binds 
-values(2, 4, null, 1, 'дерево');
+values(2, 4, null, 1, 'Г¤ГҐГ°ГҐГўГ®');
 
 insert into attr_binds 
-values(3, 1, null, 1, 'белый');
+values(3, 1, null, 1, 'ГЎГҐГ«Г»Г©');
 
 insert into attr_binds 
-values(3, 3, null, 1, 'белый');
+values(3, 3, null, 1, 'ГЎГҐГ«Г»Г©');
 
 insert into attr_binds 
-values(3, 5, null, 1, 'белый');
+values(3, 5, null, 1, 'ГЎГҐГ«Г»Г©');
 
 insert into attr_binds 
 values(3, 6, null, 1, null);
@@ -189,84 +189,108 @@ insert into references
 values(6, 4, 3, 1);
 
 insert into params
-values(4, 2, 'Дерево', null, null);
+values(4, 2, 'Г„ГҐГ°ГҐГўГ®', null, null);
 
 insert into params
-values(1, 3, 'белый', null, null);
+values(1, 3, 'ГЎГҐГ«Г»Г©', null, null);
 
 insert into params
 values(5, 3, 'Apple', null, null);
 
 insert into params
-values(3, 4, 'черный', null, null);	
+values(3, 4, 'Г·ГҐГ°Г­Г»Г©', null, null);	
 
+--в„–1
 select attributes.attr_id, attributes.name, attributes.attr_type_id, attr_types.name, attributes.attr_group_id,
 attr_groups.name from attributes
 left join attr_types on attributes.attr_type_id = attr_types.attr_type_id
 left join attr_groups on attributes.attr_group_id = attr_groups.attr_group_id;
 
+--в„–2                    
 select attributes.attr_id, attributes.name
 from attributes
 join attr_binds on attributes.attr_id = attr_binds.attr_id where attr_binds.object_type_id =: attr;
 
-select object_id, name, level lvl
-from objects
-where object_type_id in (
-select object_type_id
-from object_types
-start with object_type_id = :type_id
-connect by prior object_type_id = parent_id
-)
-start with object_id = :root_id
-connect by parent_id = prior object_id;
+--в„–3                  
+select ot.obj_type_id as ot_id, ot.name as ot_name, level
+FROM obj_types ot
+START WITH ot.obj_type_id = 5
+CONNECT BY PRIOR ot.parent_id=ot.obj_type_id;
 
-select references.reference, attributes.name
-from references
-join attributes on references.attr_id = attributes.attr_id where references.object_id =: obj;
-
+                    
+--в„–4
+SELECT o.object_id as obj_id, o.name as obj_name, level
+FROM objects o
+START WITH o.object_id = 1
+CONNECT BY PRIOR o.object_id=o.parent_id;                    
+                    
+             
+--в„–5            
 select distinct ot.obj_type_id as ot_id, ot.name as ot_name, obj.object_id as obj_id, obj.name as obj_name
 from OBJECTS obj,
-(SELECT obj_type_id, name from OBJ_TYPES
+(select obj_type_id, name from OBJ_TYPES
 start with obj_type_id = 2
 connect by prior obj_type_id = parent_id
 )ot
 where obj.obj_type_id=ot.obj_type_id;
+select references.reference, attributes.name
+from references
+join attributes on references.attr_id = attributes.attr_id where references.object_id =: obj;
 
-
-
-select params.attr_id, attributes.name, params.value
-from params
-join attributes on params.attr_id = attributes.attr_id
-where object_id =: obj;
-
+--в„–6
 select pr.attr_id as attr_id, at.name as attr_name, pr.value as value
 from
 (
-    with ab as (select distinct ab.attr_id, ab.default_value
-        from object_types ot,(select object_id, obj_type_id from OBJECTS where object_id=5) obj, attr_binds ab
-        where ab.obj_type_id = ot.obj_type_id
-        start with ot.obj_type_id = obj.obj_type_id
-        connect by prior ot.parent_id=ot.obj_type_id)
-    select coalesce(pr.attr_id, ab.attr_id) as attr_id, coalesce(pr.value, ab.default_value) as value from
+    with ab as
+        (select distinct ab.attr_id, ab.default_value
+        from (select object_id, obj_type_id from OBJECTS where object_id=5) obj, ATTR_BINDS ab
+        where ab.obj_type_id = obj.obj_type_id)
+    select COALESCE(pr.attr_id, ab.attr_id) as attr_id, COALESCE(pr.value, ab.default_value) as value from
     (
-        select ref.attr_id, cast (ref.refernced_object_id as VARCHAR2(20 BYTE)) as value
+        select ref.attr_id, cast (ref.reference as VARCHAR2(20 BYTE)) as value
         from  references ref
         where ref.object_id = 5
         union
         select p.attr_id, p.value_t as value
-        from params p
+        from PARAMS p
         where p.object_id = 5
     ) pr
-    full outer join ab on ab.attr_id=pr.attr_id
+    FULL OUTER JOIN ab on ab.attr_id=pr.attr_id
     order by attr_id
 )pr
-join ATTRIBUTES at on at.attr_id=pr.attr_id;
+join attributes at on at.attr_id=pr.attr_id;
+         
+--в„–7
+select references.reference, attributes.name
+from references
+join attributes on references.attr_id = attributes.attr_id where references.object_id =: obj;
 
-select o.object_id as obj_id, o.name as obj_name, level
-from objects o
-start with o.object_id = 1
-connect by prior o.object_id=o.parent_id;
+--в„–8
+select pr.attr_id as attr_id, at.name as attr_name, pr.value as value
+from
+(
+    with ab as (select distinct ab.attr_id, ab.default_value
+        from object_types ot,(select object_id, obj_type_id from objects where object_id =  5) obj, attr_binds ab
+        where ab.obj_type_id = ot.obj_type_id
+        start with ot.obj_type_id = obj.obj_type_id
+        connect by prior ot.parent_id=ot.obj_type_id)
+    select COALESCE(pr.attr_id, ab.attr_id) as attr_id, COALESCE(pr.value, ab.default_value) as value from
+    (
+        select ref.attr_id, cast (ref.reference as VARCHAR2(20 BYTE)) as value
+        from  references ref
+        where ref.object_id = 5
+        union
+        select p.attr_id, p.value_t as value
+        from PARAMS p
+        where p.object_id = 5
+    ) pr
+    FULL OUTER JOIN ab ON ab.attr_id=pr.attr_id
+    order by attr_id
+)pr
+JOIN attributes at on at.attr_id=pr.attr_id;
+        
 
+ 
 delete from references;
 delete from params;
 delete from attr_binds;
