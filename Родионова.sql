@@ -255,7 +255,7 @@ from
         (select distinct ab.attr_id, ab.default_value
         from (select object_id, obj_type_id from OBJECTS where object_id=5) obj, ATTR_BINDS ab
         where ab.obj_type_id = obj.obj_type_id)
-    select COALESCE(pr.attr_id, ab.attr_id) as attr_id, COALESCE(pr.value, ab.default_value) as value from
+    select COALESCE(pr.attr_id, ab.attr_id) as attr_id, COALESCE(pr.value, ab.default_value, pr.date_value) as value from
     (
         select ref.attr_id, cast (ref.reference as VARCHAR2(20 BYTE)) as value
         from  references ref
@@ -287,7 +287,7 @@ from
         where ab.obj_type_id = ot.obj_type_id
         start with ot.obj_type_id = obj.obj_type_id
         connect by prior ot.parent_id=ot.obj_type_id)
-    select COALESCE(pr.attr_id, ab.attr_id) as attr_id, COALESCE(pr.value, ab.default_value) as value from
+    select COALESCE(pr.attr_id, ab.attr_id) as attr_id, COALESCE(pr.value, ab.default_value, pr.date_value) as value from
     (
         select ref.attr_id, cast (ref.reference as VARCHAR2(20 BYTE)) as value
         from  references ref
