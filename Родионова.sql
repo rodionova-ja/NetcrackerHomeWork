@@ -203,14 +203,14 @@ values(3, 4, '÷åðíûé', null, null);
 --№1 
 /*Получение объектов заданного объектного типа(учитывая только наследование ОТ)(ot_id, ot_name, obj_id, obj_name)*/
 
-select attr.attr_id, attr.name, attr.attr_type_id, attr_types.name, attr.attr_group_id,
-attr_groups.name from attributes as attr
+select attr.attr_id as attr_id, attr.name as attr_name, attr.attr_type_id as attr_type_id, attr_types.name as attr_type_name, attr.attr_group_id as attr_group_id,
+attr_groups.name as attr_group_name from attributes as attr
 left join attr_types attr_t on attr.attr_type_id = attr_t.attr_type_id
 left join attr_groups attr_g on attr.attr_group_id = attr_g.attr_group_id;
 
 --№2   
 /*  Получение всех атрибутов для заданного объектного типа, без учета наследования(attr_id, attr_name )*/               
-select attr.attr_id, attr.name 
+select attr.attr_id as attr_id, attr.name as attr_name
 from attributes as attr
 join attr_binds on attributes.attr_id = attr_binds.attr_id where attr_binds.object_type_id =: attr;
 
@@ -272,7 +272,7 @@ join attributes at on at.attr_id=pr.attr_id;
          
 --№7
 /*Получение ссылок на заданный объект(все объекты, которые ссылаются на текущий)(ref_id, ref_name)*/
-select ref.reference, attr.name
+select ref.reference as ref_id, attr.name as ref_name
 from references as ref
 join attributes as attr on ref.attr_id = attr.attr_id where ref.object_id =: obj;
 
