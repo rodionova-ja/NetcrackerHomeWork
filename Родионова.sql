@@ -200,32 +200,39 @@ values(5, 3, 'Apple', null, null);
 insert into params
 values(3, 4, '÷åðíûé', null, null);	
 
---№1
+--№1 
+/*Получение объектов заданного объектного типа(учитывая только наследование ОТ)(ot_id, ot_name, obj_id, obj_name)*/
+
 select attributes.attr_id, attributes.name, attributes.attr_type_id, attr_types.name, attributes.attr_group_id,
 attr_groups.name from attributes
 left join attr_types on attributes.attr_type_id = attr_types.attr_type_id
 left join attr_groups on attributes.attr_group_id = attr_groups.attr_group_id;
 
---№2                    
+--№2   
+/*  Получение всех атрибутов для заданного объектного типа, без учета наследования(attr_id, attr_name )*/               
 select attributes.attr_id, attributes.name
 from attributes
 join attr_binds on attributes.attr_id = attr_binds.attr_id where attr_binds.object_type_id =: attr;
 
---№3                  
+--№3 
+/*Получение иерархии ОТ(объектных типов)  для заданного объектного типа(нужно получить иерархию наследования) (ot_id, ot_name, level)*/
+                 
 select ot.obj_type_id as ot_id, ot.name as ot_name, level
 FROM obj_types ot
 START WITH ot.obj_type_id = 5
 CONNECT BY PRIOR ot.parent_id=ot.obj_type_id;
 
-                    
+/*Получение вложенности объектов для заданного объекта(нужно получить иерархию вложенности)(obj_id, obj_name, level)*/                    
 --№4
 SELECT o.object_id as obj_id, o.name as obj_name, level
 FROM objects o
 START WITH o.object_id = 1
 CONNECT BY PRIOR o.object_id=o.parent_id;                    
                     
-             
---№5            
+         
+--№5     
+/*Получение объектов заданного объектного типа(учитывая только наследование ОТ)(ot_id, ot_name, obj_id, obj_name)*/   
+       
 select distinct ot.obj_type_id as ot_id, ot.name as ot_name, obj.object_id as obj_id, obj.name as obj_name
 from OBJECTS obj,
 (select obj_type_id, name from OBJ_TYPES
@@ -237,7 +244,10 @@ select references.reference, attributes.name
 from references
 join attributes on references.attr_id = attributes.attr_id where references.object_id =: obj;
 
+
 --№6
+/*Получение значений всех атрибутов(всех возможных типов) для заданного объекта(без учета наследования ОТ)(attr_id, attr_name, value)*/
+
 select pr.attr_id as attr_id, at.name as attr_name, pr.value as value
 from
 (
@@ -261,11 +271,14 @@ from
 join attributes at on at.attr_id=pr.attr_id;
          
 --№7
+/*Получение ссылок на заданный объект(все объекты, которые ссылаются на текущий)(ref_id, ref_name)*/
 select references.reference, attributes.name
 from references
 join attributes on references.attr_id = attributes.attr_id where references.object_id =: obj;
 
 --№8
+/*Получение значений всех атрибутов(всех возможных типов, без повторяющихся атрибутов) для заданного объекта( с учетом наследования ОТ) Вывести в виде см. п.6*/
+
 select pr.attr_id as attr_id, at.name as attr_name, pr.value as value
 from
 (
